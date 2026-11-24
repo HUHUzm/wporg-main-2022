@@ -1,12 +1,15 @@
 {
-  "agents_block": "97416bc0289087375fc24b040cdb96b488c7c36f00e9f27efe975543efee0d4b",
+  "agents_block": "df3a4f8a4c8a59f5c8fc3892b0f2468817dc609f955ac15163c2f905ab929474",
   "files": {
     ".agent-toolkit/config/prices.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
-    ".agent-toolkit/config/toolkit.json": "07caf3eda6d8dc02a9672ca345abaa0cf7c8bd8a674351a9ba195b1f32e75bb9",
+    ".agent-toolkit/config/quota-saver.json": "79736808b241d79feddf0dc8bf44d22e516bcaa5c53fa28c333aa9a11542ed33",
+    ".agent-toolkit/config/toolkit.json": "2c988a7ebe453639ffeb16aa300d93a3cd744b0f6534c18e41603e252e6c9d9a",
     ".agent-toolkit/workers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    ".agent-toolkit/workers/deepseek_worker.py": "6d36290443c74965a0e5a5baf81dda17f7e8b561b8f59e046087ef52d16647ea",
-    ".agent-toolkit/workers/monitor.py": "ed1bedc30f992cb4fe336854f009c20ec79d5410cb90eafbfd67facf8cf0b445",
-    ".agents/skills/deepseek-delegation/SKILL.md": "54b025226a0a2ebbcedb213632b9331428026d73645adb49319d3276536b5b56",
+    ".agent-toolkit/workers/deepseek_worker.py": "e45bf57975d8c1d0b0153c5f231e5d3466a7b554bab4b70579ed971f903d92c9",
+    ".agent-toolkit/workers/monitor.py": "6f91e15852734a25e88402a978f3f8092c4c6ddeed11e17e66e21ccc031b2f0c",
+    ".agent-toolkit/workers/quota_saver.py": "5ab39b8b59b6888ed3e60269b3e211ef2ab8ca2bf27aadf35050db06c2a5d00e",
+    ".agents/skills/deepseek-delegation/SKILL.md": "b16135dd882984e2c6036d248c0b7636c6c05f08b004dc3bb23db9d93c3638c4",
+    ".agents/skills/quota-saver/SKILL.md": "5e09e3bf456632676f5b676c33455557c1b2d6a9b09131340512f3a3673804c8",
     ".agents/skills/website-development/SKILL.md": "a289a0891737e88674222d9f95b239be8fba1b499923d3b9465951b55f5d7d5d"
   },
   "manifest_version": 1,
@@ -19,12 +22,13 @@
     "max_concurrency": 3,
     "schema_version": 1,
     "skill_versions": {
-      "deepseek-delegation": "1.0.0",
+      "deepseek-delegation": "1.1.0",
       "document-processing": "1.0.0",
       "marketing-content": "1.0.0",
+      "quota-saver": "1.1.0",
       "website-development": "1.0.0"
     },
-    "toolkit_version": "1.0.0",
-    "worker_version": "1.0.0"
+    "toolkit_version": "1.1.0",
+    "worker_version": "1.1.0"
   }
 }

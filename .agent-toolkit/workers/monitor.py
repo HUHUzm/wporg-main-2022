@@ -44,7 +44,7 @@ STAGES = {"initial": ("passed", "failed"), "revision": ("passed", "failed"),
 
 
 @contextmanager
-def database(path):
+def database(path, *, write=False):
     path = Path(path)
     if path == Path(".agent-toolkit/monitor.sqlite3"):
         path.parent.mkdir(mode=0o700, exist_ok=True)
@@ -55,17 +55,18 @@ def database(path):
     try:
         db.execute("PRAGMA foreign_keys = ON")
         with db:
-            db.execute("BEGIN")
+            db.execute("BEGIN IMMEDIATE" if write else "BEGIN")
             version = db.execute("PRAGMA user_version").fetchone()[0]
             target = CONFIG["schema_version"]
             if version > target:
                 raise ValueError("unsupported database version")
             if version < target:
-                db.rollback()
-                db.execute("BEGIN IMMEDIATE")
-                version = db.execute("PRAGMA user_version").fetchone()[0]
-                if version > target:
-                    raise ValueError("unsupported database version")
+                if not write:
+                    db.rollback()
+                    db.execute("BEGIN IMMEDIATE")
+                    version = db.execute("PRAGMA user_version").fetchone()[0]
+                    if version > target:
+                        raise ValueError("unsupported database version")
                 if version == 0 and db.execute(
                     "SELECT 1 FROM sqlite_schema WHERE name NOT LIKE 'sqlite_%' LIMIT 1"
                 ).fetchone():
@@ -111,7 +112,7 @@ def record_execution(path, result, project_id="default"):
         if not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}", project_id):
             return False
         safe = metadata(result)
-        with database(path) as db:
+        with database(path, write=True) as db:
             fields = (*TASK_FIELDS, "project_id", "toolkit_version", "parent_agent", "worker_agent")
             values = [safe[key] for key in TASK_FIELDS]
             values.extend((project_id, CONFIG["toolkit_version"], "Codex", "DeepSeek"))
@@ -134,7 +135,7 @@ def record_review(path, task_id, stage, status):
     if status not in STAGES.get(stage, ()):
         raise ValueError("invalid review stage or status")
     task_id = str(UUID(task_id))
-    with database(path) as db:
+    with database(path, write=True) as db:
         db.execute("INSERT INTO reviews VALUES (?, ?, ?, ?)", (task_id, stage, now(), status))
         if stage == "final":
             db.execute("UPDATE tasks SET final_success = ? WHERE task_id = ?",

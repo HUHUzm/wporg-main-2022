@@ -1,8 +1,9 @@
 {
-  "toolkit_version": "1.0.0",
-  "worker_version": "1.0.0",
+  "toolkit_version": "1.1.0",
+  "worker_version": "1.1.0",
   "skill_versions": {
-    "deepseek-delegation": "1.0.0",
+    "quota-saver": "1.1.0",
+    "deepseek-delegation": "1.1.0",
     "website-development": "1.0.0",
     "document-processing": "1.0.0",
     "marketing-content": "1.0.0"

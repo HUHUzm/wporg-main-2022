@@ -119,7 +119,8 @@ def usage_count(usage, key):
     return value if type(value) is int and 0 <= value < 2**63 else None
 
 
-def run_task(task, context=None, model=None, *, category="general", tracker=None):
+def run_task(task, context=None, model=None, *, category="general", tracker=None,
+             max_tokens=None, json_output=False, thinking=None):
     began = time.monotonic()
     category = category if isinstance(category, str) and category in CATEGORIES else "general"
     model = CATEGORIES.get(category, FLASH) if model is None else model
@@ -132,21 +133,30 @@ def run_task(task, context=None, model=None, *, category="general", tracker=None
         error = "invalid_task"
     else:
         content = task if context is None else f"{task}\n\nContext:\n{context}"
-        status, body, attempts, error = request("/chat/completions", {
-            "model": model, "messages": [{"role": "user", "content": content}],
-        }, tracker=tracker)
+        payload = {"model": model, "messages": [{"role": "user", "content": content}]}
+        if max_tokens is not None:
+            payload["max_tokens"] = max_tokens
+        if json_output:
+            payload["response_format"] = {"type": "json_object"}
+        if thinking is not None:
+            payload["thinking"] = {"type": "enabled" if thinking else "disabled"}
+        status, body, attempts, error = request("/chat/completions", payload, tracker=tracker)
         if error is None:
             try:
-                result = body["choices"][0]["message"]["content"]
-                if not isinstance(result, str):
-                    raise TypeError
-                key = os.environ.get("DEEPSEEK_API_KEY")
-                if key:
-                    result = result.replace(key, "[REDACTED]")
                 usage = body.get("usage") or {}
                 if not isinstance(usage, dict):
                     usage = {}
-            except (KeyError, IndexError, TypeError):
+                choice = body["choices"][0]
+                if json_output and choice.get("finish_reason") != "stop":
+                    error = "truncated_output" if choice.get("finish_reason") == "length" else "incomplete_output"
+                else:
+                    result = choice["message"]["content"]
+                if error is None and not isinstance(result, str):
+                    raise TypeError
+                key = os.environ.get("DEEPSEEK_API_KEY")
+                if key and result is not None:
+                    result = result.replace(key, "[REDACTED]")
+            except (AttributeError, KeyError, IndexError, TypeError):
                 result, error = None, "invalid_response"
     return {"task_id": str(uuid4()), "timestamp": now(), "model": model,
             "task_category": category, "http_status": status,

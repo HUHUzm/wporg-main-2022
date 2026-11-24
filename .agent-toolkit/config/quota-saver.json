@@ -1,0 +1,8 @@
+{
+  "pro_categories": ["analysis", "business-logic", "comparison", "reasoning", "review"],
+  "context_categories": ["analysis", "business-logic", "comparison", "extraction", "reasoning", "review", "translation"],
+  "max_input_chars": 30000,
+  "max_result_chars": 2000,
+  "flash_max_tokens": 1200,
+  "pro_max_tokens": 6000
+}
