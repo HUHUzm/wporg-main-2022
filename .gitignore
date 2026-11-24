@@ -38,3 +38,7 @@ phpcs.xml.dist
 lighthouse.html
 source/wp-content/tests/phpunit/.phpunit.result.cache
 /env/export-failures.txt
+
+# Local Agent Toolkit database and SQLite sidecars.
+/.agent-toolkit/monitor.sqlite3
+/.agent-toolkit/monitor.sqlite3-*

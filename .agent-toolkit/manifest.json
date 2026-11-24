@@ -1,0 +1,30 @@
+{
+  "agents_block": "97416bc0289087375fc24b040cdb96b488c7c36f00e9f27efe975543efee0d4b",
+  "files": {
+    ".agent-toolkit/config/prices.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    ".agent-toolkit/config/toolkit.json": "07caf3eda6d8dc02a9672ca345abaa0cf7c8bd8a674351a9ba195b1f32e75bb9",
+    ".agent-toolkit/workers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".agent-toolkit/workers/deepseek_worker.py": "6d36290443c74965a0e5a5baf81dda17f7e8b561b8f59e046087ef52d16647ea",
+    ".agent-toolkit/workers/monitor.py": "ed1bedc30f992cb4fe336854f009c20ec79d5410cb90eafbfd67facf8cf0b445",
+    ".agents/skills/deepseek-delegation/SKILL.md": "54b025226a0a2ebbcedb213632b9331428026d73645adb49319d3276536b5b56",
+    ".agents/skills/website-development/SKILL.md": "a289a0891737e88674222d9f95b239be8fba1b499923d3b9465951b55f5d7d5d"
+  },
+  "manifest_version": 1,
+  "types": [
+    "website"
+  ],
+  "versions": {
+    "advanced_model": "deepseek-v4-pro",
+    "default_model": "deepseek-flash",
+    "max_concurrency": 3,
+    "schema_version": 1,
+    "skill_versions": {
+      "deepseek-delegation": "1.0.0",
+      "document-processing": "1.0.0",
+      "marketing-content": "1.0.0",
+      "website-development": "1.0.0"
+    },
+    "toolkit_version": "1.0.0",
+    "worker_version": "1.0.0"
+  }
+}
