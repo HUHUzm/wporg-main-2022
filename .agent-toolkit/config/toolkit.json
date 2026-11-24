@@ -1,0 +1,14 @@
+{
+  "toolkit_version": "1.0.0",
+  "worker_version": "1.0.0",
+  "skill_versions": {
+    "deepseek-delegation": "1.0.0",
+    "website-development": "1.0.0",
+    "document-processing": "1.0.0",
+    "marketing-content": "1.0.0"
+  },
+  "schema_version": 1,
+  "default_model": "deepseek-flash",
+  "advanced_model": "deepseek-v4-pro",
+  "max_concurrency": 3
+}
